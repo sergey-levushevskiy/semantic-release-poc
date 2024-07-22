@@ -1,6 +1,6 @@
 {
   "name": "semantic-release-poc",
-  "version": "1.0.2",
+  "version": "1.0.3-staging.1",
   "description": "Versioning POC",
   "main": "index.js",
   "scripts": {
