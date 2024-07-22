@@ -1,0 +1,52 @@
+{
+  "plugins": [
+    [
+      "@semantic-release/exec", 
+      {
+        "analyzeCommitsCmd": "echo ${commits.find(c => c.message.includes('[UPDATE MAJOR]')) ? 'major' : (commits.find(c => c.message.includes('[UPDATE MINOR]')) ? 'minor' : 'patch')}"
+      }
+    ], 
+    "@semantic-release/release-notes-generator", 
+    [
+      "@semantic-release/npm", 
+      {
+        "npmPublish": false
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["package.json"]
+      }
+    ],
+    [
+      "@semantic-release/github", 
+      {
+        "successComment": false,
+        "failComment": false,
+        "releasedLabels": false
+      }
+    ]
+  ], 
+  "branches": [
+    {
+      "name": "env/prod",
+      "channel": "prod"
+    },
+    {
+      "name": "env/staging",
+      "channel": "staging",
+      "prerelease": "staging"
+    },
+    {
+      "name": "env/development",
+      "channel": "development",
+      "prerelease": "dev"
+    },
+    {
+      "name": "env/sandbox",
+      "channel": "sandbox",
+      "prerelease": "sandbox"
+    }
+  ]
+}
