@@ -1,0 +1,46 @@
+name: release
+
+on:
+  push:
+    branches:
+      - env/prod
+      - env/staging
+      - env/development
+      - env/sandbox
+
+concurrency: release-${{ github.base_ref || github.ref }}
+
+env:
+  HOME: /home/runner
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    outputs:
+      release_commit_sha: ${{ steps.get-sha.outputs.sha }}
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
+      - name: Setup yarn
+        run: npm install -g yarn@1.22
+
+      - name: Install dependencies
+        run: |
+          yarn --version
+          yarn install --immutable
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+
