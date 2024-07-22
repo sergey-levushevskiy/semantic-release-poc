@@ -16,9 +16,6 @@ env:
 jobs:
   release:
     runs-on: ubuntu-20.04
-    permissions:
-      id-token: write
-      contents: read
     outputs:
       release_commit_sha: ${{ steps.get-sha.outputs.sha }}
     timeout-minutes: 10
