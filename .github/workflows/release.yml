@@ -12,6 +12,7 @@ concurrency: release-${{ github.base_ref || github.ref }}
 
 env:
   HOME: /home/runner
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   release:
