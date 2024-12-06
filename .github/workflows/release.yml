@@ -16,6 +16,9 @@ env:
 jobs:
   release:
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: write
+      contents: write
     outputs:
       release_commit_sha: ${{ steps.get-sha.outputs.sha }}
     timeout-minutes: 10
@@ -41,6 +44,6 @@ jobs:
 
       - name: Release
         env:
-          GH_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
